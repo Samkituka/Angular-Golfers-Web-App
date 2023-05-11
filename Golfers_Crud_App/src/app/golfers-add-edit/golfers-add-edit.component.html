@@ -1,0 +1,68 @@
+<div mat-dialog-title>
+    <h1> Golfers Form </h1>
+</div>
+<form [formGroup]="golfersForm" (ngSubmit)="onFormSubmit()"  >
+  <div mat-dialog-content class="content">
+  <div class="row">
+      <mat-form-field appearance="outline">
+          <mat-label>FirstName</mat-label>
+          <input matInput type="text" placeholder="Ex..Jon" formControlName="firstName">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+          <mat-label>LastName</mat-label>
+          <input matInput  type="text" placeholder="Ex..Rahm" formControlName="lastName">
+      </mat-form-field>
+  </div>
+  <div class="row">
+      <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" placeholder="Ex..Golfers@gmail.com" formControlName="email">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Dob</mat-label>
+          <input matInput type="datetime" [matDatepicker]="picker" placeholder="Ex..02/10/1978" formControlName="Dob">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>         
+  </div>
+   <div class="row">
+      <mat-radio-group aria-label="Select an option" formControlName="gender">
+          <mat-label><b>Gender    </b></mat-label>
+          <mat-radio-button value="male">Male</mat-radio-button>
+          <mat-radio-button value="female">Female</mat-radio-button>
+          <mat-radio-button value="others">Others</mat-radio-button>
+        </mat-radio-group>
+   </div>
+
+   <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Education</mat-label>
+        <mat-select formControlName="education">
+          <mat-option *ngFor="let val of education" [value]="val.value">  {{val.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+          <mat-label>Championship </mat-label>
+          <input matInput  type="text" placeholder="Ex..PGA TOUR Champions" formControlName="championship">
+      </mat-form-field>
+   </div>
+   <div class="row">
+      <mat-form-field appearance="outline">
+          <mat-label>Wins</mat-label>
+          <input matInput  type="number"  placeholder="Ex..13" formControlName="wins">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+          <mat-label>Losses</mat-label>
+          <input matInput  type="number" placeholder="Ex..5" formControlName="losses">
+      </mat-form-field>
+
+   </div>
+  </div>
+
+  <div mat-dialog-actions class="action">  
+    <button mat-raised-button>Cancel </button>
+    <button mat-raised-button color="primary" type="submit">Save </button>
+  </div>
+</form>
