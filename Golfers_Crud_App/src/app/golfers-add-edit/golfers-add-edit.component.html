@@ -1,15 +1,15 @@
 <div mat-dialog-title>
     <h1> Golfers Form </h1>
 </div>
-<form [formGroup]="golfersForm" (ngSubmit)="onFormSubmit()"  >
+<form [formGroup]="golfersForm" (ngSubmit)="onFormSubmit()">
   <div mat-dialog-content class="content">
   <div class="row">
       <mat-form-field appearance="outline">
-          <mat-label>FirstName</mat-label>
+          <mat-label>First Name</mat-label>
           <input matInput type="text" placeholder="Ex..Jon" formControlName="firstName">
       </mat-form-field>
       <mat-form-field appearance="outline">
-          <mat-label>LastName</mat-label>
+          <mat-label>Last Name</mat-label>
           <input matInput  type="text" placeholder="Ex..Rahm" formControlName="lastName">
       </mat-form-field>
   </div>
@@ -19,7 +19,7 @@
           <input matInput type="email" placeholder="Ex..Golfers@gmail.com" formControlName="email">
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>Dob</mat-label>
+          <mat-label>Date of birth</mat-label>
           <input matInput type="datetime" [matDatepicker]="picker" placeholder="Ex..02/10/1978" formControlName="Dob">
           <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -62,7 +62,7 @@
   </div>
 
   <div mat-dialog-actions class="action">  
-    <button mat-raised-button>Cancel </button>
-    <button mat-raised-button color="primary" type="submit">Save </button>
+    <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel </button>
+    <button mat-raised-button color="primary" type="submit">{{data ? 'Update' : 'Save'}} </button>
   </div>
 </form>

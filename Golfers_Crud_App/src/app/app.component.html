@@ -1,3 +1,5 @@
+
+<div class="bar">
 <p>
   <mat-toolbar color="primary">
    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
@@ -10,3 +12,87 @@
   </button>
 </mat-toolbar>
 </p>
+</div>
+
+<div class="main">
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+  </mat-form-field>
+  
+  <div class="table-container">
+    <table mat-table  [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="Dob">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Of Birth </th>
+      <td mat-cell *matCellDef="let element"> {{element.Dob |date}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender </th>
+      <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="education">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Education </th>
+      <td mat-cell *matCellDef="let element"> {{element.education}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="championship">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Championship </th>
+      <td mat-cell *matCellDef="let element"> {{element.championship}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="wins">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Wins </th>
+      <td mat-cell *matCellDef="let element"> {{element.wins}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="losses">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Losses </th>
+      <td mat-cell *matCellDef="let element"> {{element.losses}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action" class ="actions">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button color="primary"  (click)="openEditForm(row)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteGolfer(row.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    </tr>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </table>
+  </div>
+
+</div>

@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { GolferService } from '../services/golfer.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 
 interface VAL {
@@ -12,7 +14,7 @@ interface VAL {
   templateUrl: './golfers-add-edit.component.html',
   styleUrls: ['./golfers-add-edit.component.scss']
 })
-export class GolfersAddEditComponent {
+export class GolfersAddEditComponent implements OnInit{
 
   golfersForm: FormGroup;
   
@@ -24,13 +26,16 @@ export class GolfersAddEditComponent {
     {value:'Doctorat-4',viewValue:'Doctorat'}, 
   ];
   constructor (
-    private _fb: FormBuilder)
-     {
+    private _fb: FormBuilder, 
+    private _gfService: GolferService,
+    private _dialogRef: MatDialogRef<GolfersAddEditComponent>,
+    @Inject (MAT_DIALOG_DATA) public data: any)
+    {
     this.golfersForm = this._fb.group({
-      firstname:'',
-      lastname:'',
+      firstName:'',
+      lastName:'',
       email:'',
-      dob:'',
+      Dob:'',
       gender:'',
       education:'',
       championship:'',
@@ -39,10 +44,32 @@ export class GolfersAddEditComponent {
     });
   }
 
-  onFormSubmit(){
-    if (this.golfersForm.valid){
-      console.log(this.golfersForm.value);
-    }
+  ngOnInit(): void {
+    this.golfersForm.patchValue(this.data);
   }
 
-}
+  onFormSubmit(){
+    if (this.data){
+      this._gfService.updateGolfer(this.data.id, this.golfersForm.value).subscribe({
+        next: (val: any) => {
+           alert ('Golfer updated successfully');
+           this._dialogRef.close(true);
+        }, 
+        error: (err: any) => {
+          console.error(err);
+        }
+      });
+    }
+    else {
+      this._gfService.addGolfer(this.golfersForm.value).subscribe({
+        next: (val: any) => {
+           alert ('Golfer added successfully');
+           this._dialogRef.close(true);
+        }, 
+        error: (err: any) => {
+          console.error(err);
+        }
+      });
+    }
+    }
+  }
