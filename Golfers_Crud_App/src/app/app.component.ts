@@ -6,6 +6,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { ɵafterNextNavigation } from '@angular/router';
+import { CoreService } from './core/core.service';
 
 
 
@@ -36,8 +37,10 @@ export class AppComponent  implements OnInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-   constructor ( private _dialog: MatDialog,
-     private _gfService:GolferService
+   constructor (
+     private _dialog: MatDialog,
+     private _gfService:GolferService,
+     private _coreService: CoreService
      ){}
 
      ngOnInit(): void {
@@ -72,7 +75,7 @@ export class AppComponent  implements OnInit{
    deleteGolfer(id: number) {
     this._gfService.deleteGolfer(id).subscribe({
       next: (res) => {
-        alert('Employee deleted!');
+        this._coreService.openSnackBar('Employee deleted!', 'done');
         this.getGolferList(); 
       },
       error: console.log,

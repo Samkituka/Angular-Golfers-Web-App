@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { GolferService } from '../services/golfer.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CoreService } from '../core/core.service';
 
 
 interface VAL {
@@ -29,8 +30,9 @@ export class GolfersAddEditComponent implements OnInit{
     private _fb: FormBuilder, 
     private _gfService: GolferService,
     private _dialogRef: MatDialogRef<GolfersAddEditComponent>,
-    @Inject (MAT_DIALOG_DATA) public data: any)
-    {
+    @Inject (MAT_DIALOG_DATA) public data: any,
+    private _coreService : CoreService,
+  ){
     this.golfersForm = this._fb.group({
       firstName:'',
       lastName:'',
@@ -52,7 +54,7 @@ export class GolfersAddEditComponent implements OnInit{
     if (this.data){
       this._gfService.updateGolfer(this.data.id, this.golfersForm.value).subscribe({
         next: (val: any) => {
-           alert ('Golfer updated successfully');
+           this._coreService.openSnackBar('Golfer updated successfully');
            this._dialogRef.close(true);
         }, 
         error: (err: any) => {
@@ -63,7 +65,7 @@ export class GolfersAddEditComponent implements OnInit{
     else {
       this._gfService.addGolfer(this.golfersForm.value).subscribe({
         next: (val: any) => {
-           alert ('Golfer added successfully');
+           this._coreService.openSnackBar('Golfer added successfully');
            this._dialogRef.close(true);
         }, 
         error: (err: any) => {
